@@ -2,6 +2,11 @@ from random import shuffle  #se usará el shuffle para aleatorizar las preguntas
 import time #se usará para tiempo entre preguntas
 #Listas dónde se encontrarán las preguntas, posibles respuestas, respuesta correcta y una acotación sobre la pregunta
 #Se usará el siguiente formato: [Pregunta, Alternativa_1,Alternativa_2,Alternativa_3, Alternativa_correcta(número), acotación]
+import os
+
+clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+
+clearConsole()
 a = [
     '¿Para qué usan las computadoras las variables?', 'Para recordar información', 'Para dibujar imagenes en pantalla', 'Para imprimir video en pantalla', '1',
     'Cada variable debe tener un nombre unico, llamado identificador'
@@ -32,14 +37,15 @@ iniciar_trivia = True #boleano para empezar y terminar trivia
 iniciar_respuestas = True  #boleano para cerrar el loop de respuestas
 puntaje = 0
 intentos = 0
-#comando que imprime lineas vacias para tener espacio entre las preguntas
-limpiar = lambda: print('\n' * 2)
+
 
 print(CYAN,'\nHola y bienvenido a mi trivia!!!! \n\nEn esta trivia encontrarás preguntas básicas sobre la programación en phyton :D \n\nA continuación te explicaré las reglas:')
-time.sleep(2)
+time.sleep(3)
 print(MAGENTA,'\n\nAparecerá en pantalla una serie de preguntas, cada pregunta consta de 3 alternativas. \n\nUsando números de 1 al 3 deberás escoger entre ellas la respuesta correcta. Cuando aciertes una respuesta, se te sumarán 10 puntos!! :D, pero si fallas, se restarán 3 puntos del total acumulado D:')
-time.sleep(4)
-print('Ahora que sabes las reglas, comencemos!!!')
+time.sleep(5)
+print('\n\nAhora que sabes las reglas, comencemos!!!')
+time.sleep(2)
+clearConsole()
 while iniciar_trivia == True:
   intentos += 1
   puntaje = 0
@@ -49,6 +55,7 @@ while iniciar_trivia == True:
   print(YELLOW,'\nPuntaje inicial: ', puntaje,GREEN)
   input('\nPresiona enter para continuar')
   time.sleep(1)
+  clearConsole()
   while (len(preguntas) > 0):#Al eliminarse todos los elementos de esta lista, se terminará el ciclo
     shuffle(preguntas)#Aleatorizamos las preguntas
     print(BLUE,'\n',preguntas[0][0])
@@ -65,18 +72,19 @@ while iniciar_trivia == True:
             print(RESET,'\n',preguntas[0][5])
             puntaje += 10
             print(YELLOW,'\nGanaste 10 puntos')
-            time.sleep(2)
+            time.sleep(4)
             iniciar_respuestas = False
+            clearConsole()
         elif respuesta in ('1', '2', '3'):
             print(RED,'\nIncorrecto')
             puntaje -= 3
             print(YELLOW,'\nPrediste 3 puntos')
             time.sleep(1)
+            clearConsole()
             iniciar_respuestas = False
         else:
             respuesta = input('\nSeleccione una opción válida: ')
     iniciar_respuestas = True
-    limpiar()
     preguntas.pop(0)  #Esta linea elmina el primer elemento de la lista para evitar repeticiones
   print(YELLOW,'\nTu puntaje total fue: ', puntaje, ' puntos')
   print(CYAN,'\n¿Deseas intentar la trivia nuevamente?',GREEN)
